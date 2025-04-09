@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý chi tiêu cá nhân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Quản lý chi tiêu</h1>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-blue-200 transition">Trang chủ</a>
+                <a href="#" class="hover:text-blue-200 transition">Thống kê</a>
+                <a href="#" class="hover:text-blue-200 transition">Lịch sử</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-blue-50 transition">Đăng nhập</button>
+                <button id="registerBtn" class="border border-white px-4 py-2 rounded-md font-medium hover:bg-blue-500 transition">Đăng ký</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Quản lý chi tiêu thông minh</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Theo dõi và kiểm soát chi tiêu hàng tháng của bạn một cách dễ dàng</p>
+        </div>
+
+        <!-- Budget Management -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Ngân sách hàng tháng</h3>
+                <button onclick="showBudgetForm()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Thêm ngân sách
+                </button>
+            </div>
+            <div id="budgetList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Budget items will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Category Management -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Danh mục chi tiêu</h3>
+                <button onclick="showCategoryForm()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Thêm danh mục
+                </button>
+            </div>
+            <div id="categoryList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Category items will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Transaction Recording -->
+        <section class="mb-12">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Ghi chép chi tiêu</h3>
+                <button onclick="showTransactionForm()" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                    <i class="fas fa-plus mr-2"></i>Thêm giao dịch
+                </button>
+            </div>
+            <div id="transactionList" class="space-y-4">
+                <!-- Transactions will be rendered here -->
+            </div>
+        </section>
+
+        <!-- Statistics -->
+        <section class="mb-12">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">Thống kê chi tiêu</h3>
+            
+            <!-- Summary Cards -->
+            <div id="summaryCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Cards will be rendered here -->
+            </div>
+            
+            <!-- Spending Chart -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h4 class="text-lg font-bold text-gray-700 mb-4">Phân bổ chi tiêu theo danh mục</h4>
+                <canvas id="spendingChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Banner -->
+        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-8 text-white mb-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-4">Bắt đầu quản lý chi tiêu ngay hôm nay!</h3>
+                    <p class="mb-4">Tạo ngân sách, theo dõi chi tiêu và đạt được mục tiêu tài chính của bạn.</p>
+                    <button class="bg-white text-blue-600 px-6 py-2 rounded-md font-medium hover:bg-blue-100 transition">Bắt đầu</button>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                         alt="Finance illustration" class="rounded-lg shadow-lg h-48 object-cover">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">Quản lý chi tiêu</h3>
+                    <p class="text-gray-400">Giải pháp quản lý tài chính cá nhân đơn giản và hiệu quả</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Liên kết</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Trang chủ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Thống kê</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Lịch sử</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Hỗ trợ</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Trợ giúp</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Liên hệ</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Pháp lý</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Điều khoản</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Bảo mật</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>© 2023 Quản lý chi tiêu. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
